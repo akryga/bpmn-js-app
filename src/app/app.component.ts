@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   title = 'bpmn-js-angular';
 
-  diagramUrl = 'assets/2.xml';
+  diagramUrl = '2.xml';
   importError?: Error;
 
   @ViewChild('diagram') diagram: DiagramComponent;
@@ -22,7 +22,7 @@ export class AppComponent {
   });
 
   changeNxml(e){
-    this.diagramUrl = "assets/"+e.target.value;
+    this.diagramUrl = e.target.value;
     console.log(e.target.value);
   }
 

@@ -29,6 +29,7 @@ import {
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
 
 import { from, Observable, Subscription } from 'rxjs';
+import { XmlLoaderService } from "../xmlloader.service"
 
 @Component({
   selector: 'app-diagram',
@@ -59,7 +60,7 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
     this._bpmnJS = value;
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private xmlLoader: XmlLoaderService ) {
     this.bpmnJS.on('import.done', ({ error }) => {
       if (!error) {
         this.bpmnJS.get('canvas').zoom('fit-viewport');
@@ -105,10 +106,10 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
   /**
    * Load diagram from URL and emit completion event
    */
-  loadUrl(url: string): Subscription {
+  loadUrl(xmlFileName: string): Subscription {
 
     return (
-      this.http.get(url, { responseType: 'text' }).pipe(
+      this.xmlLoader.getXml(xmlFileName).pipe(
         switchMap((xml: string) => this.importDiagram(xml)),
         map(result => result.warnings),
       ).subscribe(
