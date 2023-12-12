@@ -10,15 +10,18 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+logEvents($event: any) {
+throw new Error('Method not implemented.');
+}
   title = 'bpmn-js-angular';
 
-  diagramUrl = '2.xml';
+  diagramUrl = '0.xml';
   importError?: Error;
 
   @ViewChild('diagram') diagram: DiagramComponent;
   
   form: FormGroup = new FormGroup({
-    nxml: new FormControl('2.xml', Validators.required)
+    nxml: new FormControl('0.xml', Validators.required)
   });
 
   changeNxml(e){

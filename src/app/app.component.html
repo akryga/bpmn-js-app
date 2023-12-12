@@ -2,6 +2,16 @@
   <div class="container-fluid">
     <div class="form-check  form-check-inline">
       <input class="form-check-input" type="radio" 
+      id="0xml"
+      value="0.xml" 
+      name="nxml" 
+      formControlName="nxml"
+      (change)="changeNxml($event)"
+      >
+      <label class="form-check-label" for="0xml">Diagram 0</label>
+    </div>
+    <div class="form-check  form-check-inline">
+      <input class="form-check-input" type="radio" 
       id="1xml"
       value="1.xml" 
       name="nxml" 
@@ -23,7 +33,7 @@
 </form>
 
 <div class="diagram-parent">
-  <app-diagram #diagram [url]="diagramUrl" (importDone)="handleImported($event)" ></app-diagram>
+  <app-diagram #diagram [url]="diagramUrl" (eventBus)="logEvents($event)" (importDone)="handleImported($event)" ></app-diagram>
 
   <div class="import-error" *ngIf="importError">
     <strong>Failed to render diagram: </strong>

@@ -47,10 +47,22 @@ import { XmlLoaderService } from "../xmlloader.service"
 })
 export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy, OnInit {
 
+
   @ViewChild('ref', { static: true }) private el: ElementRef;
   @Input() private url?: string;
   @Output() private importDone: EventEmitter<any> = new EventEmitter();
+  @Output() private eventBus: EventEmitter<any> = new EventEmitter();
   private _bpmnJS: BpmnJS = new BpmnJS();
+  
+
+  events = [
+    'element.hover',
+    'element.out',
+    'element.click',
+    'element.dblclick',
+    'element.mousedown',
+    'element.mouseup'
+  ];
   
   public get bpmnJS(): BpmnJS {
     return this._bpmnJS;
@@ -61,16 +73,28 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
   }
 
   constructor(private xmlLoader: XmlLoaderService ) {
+    
     this.bpmnJS.on('import.done', ({ error }) => {
       if (!error) {
+        this.registerEvents();
         this.bpmnJS.get('canvas').zoom('fit-viewport');
       }
     });
   }
 
+  registerEvents(){
+    var eb = this._bpmnJS.get('eventBus');
+    this.events.forEach(function(event) {
+      eb.on(event, function(e) {
+        // e.element = the model element
+        // e.gfx = the graphical element
+        console.log(event, 'on', e.element.id);
+      });
+    });
+  }
+
   ngAfterContentInit(): void {
     this.bpmnJS.attachTo(this.el.nativeElement);
-    console.log(1);
   }
 
   async getXml(): Promise<string>
