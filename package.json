@@ -22,7 +22,7 @@
     "@ng-bootstrap/ng-bootstrap": "^15.1.2",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
-    "bpmn-js": "^7.3.0",
+    "bpmn-js": "^16.0.0",
     "core-js": "^3.6.5",
     "moddle-xml": "^10.1.0",
     "rxjs": "~6.6.2",
