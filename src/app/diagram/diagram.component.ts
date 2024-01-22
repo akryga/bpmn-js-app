@@ -52,7 +52,7 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
   @Input() private url?: string;
   @Output() private importDone: EventEmitter<any> = new EventEmitter();
   @Output() private eventBus: EventEmitter<any> = new EventEmitter();
-  private _bpmnJS: BpmnJS = new BpmnJS();
+  private bpmnJS: BpmnJS = new BpmnJS();
   
 
   events = [
@@ -64,13 +64,13 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
     'element.mouseup'
   ];
   
-  public get bpmnJS(): BpmnJS {
-    return this._bpmnJS;
-  }
+  // public get bpmnJS(): BpmnJS {
+  //   return this._bpmnJS;
+  // }
 
-  public set bpmnJS(value: BpmnJS) {
-    this._bpmnJS = value;
-  }
+  // public set bpmnJS(value: BpmnJS) {
+  //   this._bpmnJS = value;
+  // }
 
   constructor(private xmlLoader: XmlLoaderService ) {
     
@@ -83,7 +83,7 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
   }
 
   registerEvents(){
-    var eb = this._bpmnJS.get('eventBus');
+    var eb = this.bpmnJS.get('eventBus');
     this.events.forEach(function(event) {
       eb.on(event, function(e) {
         // e.element = the model element
@@ -138,6 +138,10 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
         map(result => result.warnings),
       ).subscribe(
         (warnings) => {
+          
+          var canvas = this.bpmnJS.get('canvas');
+
+          canvas.addMarker('a-2', 'highlight');
           this.importDone.emit({
             type: 'success',
             warnings

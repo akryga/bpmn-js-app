@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { DiagramComponent } from './diagram/diagram.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
 
 @Component({
   selector: 'app-root',
